@@ -1,0 +1,12 @@
+(library
+	(name teash)
+	(public_name teash)
+	(libraries
+		lwt
+		lwt.unix
+		lwt_ppx
+		notty
+		notty.lwt
+	)
+	(preprocess (pps lwt_ppx))
+)

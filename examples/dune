@@ -1,0 +1,15 @@
+(executables
+  (names counter clock)
+  (libraries
+    teash
+    lwt
+    lwt.unix
+    lwt_ppx
+    notty
+  )
+  (preprocess (pps lwt_ppx))
+)
+(alias
+  (name examples)
+  (deps (glob_files *.exe))
+)
