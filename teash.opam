@@ -1,12 +1,8 @@
-opam-version: "2.0"
+opam-version: "1.2"
 
 name:         "teash"
 version:      "0.1.0"
 synopsis:     "TEA for the shell"
-description: """
-A library for developing shell/terminal applications using an
-interpretation of The Elm Architecture.
-"""
 maintainer:   "neochrome <johan@stenqvist.net>"
 authors:      "neochrome <johan@stenqvist.net>"
 homepage:     "https://github.com/neochrome/teash"
@@ -25,8 +21,9 @@ install: [
 depends: [
 	"dune" {build}
 	"lwt" {= "3.2.1"}
-	"lwt_ppx" {= "1.2.1" & build}
+	"lwt_ppx" {build & = "1.2.1"}
 	"notty" {= "0.2.1"}
-	"ocaml" {>= "4.03"}
 	"odoc" {build}
 ]
+
+available: [ocaml-version >= "4.03"]
