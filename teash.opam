@@ -20,9 +20,9 @@ install: [
 
 depends: [
 	"dune" {build}
-	"lwt" {= "3.2.1"}
-	"lwt_ppx" {build & = "1.2.1"}
-	"notty" {= "0.2.1"}
+	"lwt" {>= "3.2.1"}
+	"lwt_ppx" {build & >= "1.2.1"}
+	"notty" {>= "0.2.1"}
 	"odoc" {build}
 ]
 
