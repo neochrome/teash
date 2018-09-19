@@ -14,10 +14,6 @@ build: [
 	[make "build"]
 ]
 
-install: [
-	[make "install"]
-]
-
 depends: [
 	"dune" {build}
 	"lwt" {>= "3.2.1"}
