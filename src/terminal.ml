@@ -11,4 +11,4 @@ let resizes : (size -> 'msg) -> 'msg Sub.t =
 				)
 			|> Lwt_stream.map tagger
 			|> Lwt_stream.iter (fun msg -> push (Some msg))
-		)
+		) tagger

@@ -4,14 +4,14 @@ let now : unit -> time = Unix.time
 
 let every : time -> (time -> 'msg) -> 'msg Sub.t =
 	fun interval tagger ->
-		let key = "every:" ^ (string_of_float interval) in
+		let key = "time:every:" ^ (string_of_float interval) in
 		Sub.registration key (fun { push; _ } ->
 			let rec repeat () =
 				tagger (now ()) |> fun msg -> push (Some msg);
 				let%lwt () = Lwt_unix.sleep interval in
 				repeat ()
 			in repeat ()
-		)
+		) tagger
 
 let delay : time -> 'msg -> 'msg Cmd.t =
 	fun delay msg ->

@@ -12,7 +12,7 @@ let downs : (Notty.Unescape.button -> position -> Notty.Unescape.mods -> 'msg) -
 				)
 			|> Lwt_stream.map (fun (button,pos,mods) -> tagger button pos mods)
 			|> Lwt_stream.iter (fun msg -> push (Some msg))
-		)
+		) tagger
 
 let ups : (position -> Notty.Unescape.mods -> 'msg) -> 'msg Sub.t =
 	fun tagger ->
@@ -25,7 +25,7 @@ let ups : (position -> Notty.Unescape.mods -> 'msg) -> 'msg Sub.t =
 				)
 			|> Lwt_stream.map (fun (pos,mods) -> tagger pos mods)
 			|> Lwt_stream.iter (fun msg -> push (Some msg))
-		)
+		) tagger
 
 let drags : (position -> Notty.Unescape.mods -> 'msg) -> 'msg Sub.t =
 	fun tagger ->
@@ -38,7 +38,7 @@ let drags : (position -> Notty.Unescape.mods -> 'msg) -> 'msg Sub.t =
 				)
 			|> Lwt_stream.map (fun (pos,mods) -> tagger pos mods)
 			|> Lwt_stream.iter (fun msg -> push (Some msg))
-		)
+		) tagger
 
 let scrolls : ([`Up | `Down] -> position -> Notty.Unescape.mods -> 'msg) -> 'msg Sub.t =
 	fun tagger ->
@@ -51,7 +51,7 @@ let scrolls : ([`Up | `Down] -> position -> Notty.Unescape.mods -> 'msg) -> 'msg
 				)
 			|> Lwt_stream.map (fun (dir,pos,mods) -> tagger dir pos mods)
 			|> Lwt_stream.iter (fun msg -> push (Some msg))
-		)
+		) tagger
 
 (* for low-level use *)
 let events : (Notty.Unescape.mouse -> 'msg) -> 'msg Sub.t =
@@ -65,4 +65,4 @@ let events : (Notty.Unescape.mouse -> 'msg) -> 'msg Sub.t =
 				)
 			|> Lwt_stream.map tagger
 			|> Lwt_stream.iter (fun msg -> push (Some msg))
-		)
+		) tagger

@@ -9,4 +9,4 @@ let presses : (Notty.Unescape.key -> 'msg) -> 'msg Sub.t =
 				)
 			|> Lwt_stream.map tagger
 			|> Lwt_stream.iter (fun msg -> push (Some msg))
-		)
+		) tagger
