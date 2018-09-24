@@ -8,11 +8,22 @@ let batch cmds = Batch cmds
 let call call = Call call
 let msg msg = call (Lwt.return_some msg)
 
+let rec flatten = function
+	| None -> []
+	| Call call -> [call]
+	| Batch cmds -> cmds |> List.map flatten |> List.concat
+
+let map : ('a -> 'b) -> 'a t -> 'b t =
+	fun mapper cmd ->
+		cmd
+		|> flatten
+		|> List.map (Lwt.map (Option.map mapper))
+		|> List.map (fun call -> Call call)
+		|> batch
+
 let run : 'msg t -> ('msg option -> unit) -> unit Lwt.t =
 	fun cmd push ->
-		let rec flatten : 'msg t -> unit Lwt.t list =
-			function
-			| None -> []
-			| Batch cmds -> cmds |> List.map flatten |> List.concat
-			| Call call -> [Lwt.(call >|= push)]
-		in cmd |> flatten |> Lwt.choose
+		cmd
+		|> flatten
+		|> List.map (Lwt.map push)
+		|> Lwt.choose

@@ -8,5 +8,6 @@
 		notty
 		notty.lwt
 	)
+	(flags (:standard -w "-23"))
 	(preprocess (pps lwt_ppx))
 )
