@@ -23,7 +23,7 @@ let run : ('args, 'model, 'msg) config -> 'args -> unit =
 				let%lwt msg = Lwt_stream.last_new msgs in
 				let new_model,new_cmds = update model msg in
 				let new_subs = subscriptions new_model |> Sub.(update sub_context subs) in
-				process new_subs new_cmds new_model
+				(process [@tailcall]) new_subs new_cmds new_model
 			with Lwt_stream.Empty -> begin
 				shutdown model;
 				Lwt.return ()
